@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>CodeBlock</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>    class func isValidateEmail(text: String) -&gt; Bool {
+        if text == "" {
+            return false
+        }
+        
+        let emailRegex: String = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
+        var emailTest:NSPredicate = NSPredicate(format: "SELF MATCHES %@",emailRegex)!
+        if !emailTest.evaluateWithObject(text) {
+            return false
+        }
+        return true
+    }</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>D4416E2A-F0E8-4AD0-82E1-452584BC875C</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>isValidateEmail</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>

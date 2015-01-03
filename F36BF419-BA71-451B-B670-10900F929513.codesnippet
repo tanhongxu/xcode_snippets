@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>//
+//  dispatch.swift
+//  PhotoVerification
+//
+//  Created by James Tan on 1/2/15.
+//  Copyright (c) 2015 ceosoftcenters. All rights reserved.
+//
+
+import Foundation
+
+typealias dispatch_cancelable_closure = (cancel : Bool) -&gt; ()
+
+func delay(time:NSTimeInterval, closure:()-&gt;()) -&gt;  dispatch_cancelable_closure? {
+    
+    func dispatch_later(clsr:()-&gt;()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(time * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), clsr)
+    }
+    
+    var closure:dispatch_block_t? = closure
+    var cancelableClosure:dispatch_cancelable_closure?
+    
+    let delayedClosure:dispatch_cancelable_closure = { cancel in
+        if let clsr = closure {
+            if (cancel == false) {
+                dispatch_async(dispatch_get_main_queue(), clsr);
+            }
+        }
+        closure = nil
+        cancelableClosure = nil
+    }
+    
+    cancelableClosure = delayedClosure
+    
+    dispatch_later {
+        if let delayedClosure = cancelableClosure {
+            delayedClosure(cancel: false)
+        }
+    }
+    
+    return cancelableClosure;
+}
+
+func cancel_delay(closure:dispatch_cancelable_closure?) {
+    
+    if closure != nil {
+        closure!(cancel: true)
+    }
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>F36BF419-BA71-451B-B670-10900F929513</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>dispatch</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>

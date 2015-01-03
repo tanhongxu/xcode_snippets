@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>ClassImplementation</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>//
+//  ImagePickerViewController.swift
+//  PhotoVerification
+//
+//  Created by James Tan on 11/24/14.
+//  Copyright (c) 2014 ceosoftcenters. All rights reserved.
+//
+
+import UIKit
+import AVFoundation
+
+class CameraViewController: UIViewController {
+    
+    @IBOutlet weak var _cameraView: UIView!
+    @IBOutlet weak var _cameraControllPanelView: UIView!
+    
+    @IBOutlet weak var _thumbView: UIView!
+    @IBOutlet weak var _thumbImageView: UIImageView!
+    @IBOutlet weak var _thumbCountLabel: UILabel!
+    @IBOutlet weak var _zoomSlider: UISlider!
+    
+    var _previewImageView: UIImageView!
+    var _previewControllPanelView: UIView!
+    
+    let _captureSession = AVCaptureSession()
+    var _caputreInput: AVCaptureInput?
+    let _captureOutput: AVCaptureStillImageOutput = AVCaptureStillImageOutput()
+    
+    var _captureDevice: AVCaptureDevice?
+    var _previewLayer: AVCaptureVideoPreviewLayer?
+    var _capturedImage: UIImage?
+    var _zoomScale: CGFloat = 1.0
+    var _beginGestureScale: CGFloat = 1.0
+    var _hideSliderDispatchHandler: dispatch_cancelable_closure?
+
+    var _thumbCount: Int = 0
+    
+    var _finishBlock: ()-&gt;Void = {}
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        _zoomSlider.setMaximumTrackImage(UIImage(named: "zoomLine"), forState: .Normal)
+        _zoomSlider.setMinimumTrackImage(UIImage(named: "zoomLine"), forState: .Normal)
+        _zoomSlider.setThumbImage(UIImage(named: "zoomScale"), forState: .Normal)
+        _zoomSlider.setThumbImage(UIImage(named: "zoomScale"), forState: .Highlighted)
+        
+        _thumbCountLabel.layer.masksToBounds = true
+        _thumbCountLabel.layer.cornerRadius = _thumbCountLabel.frame.width/2
+        
+        _captureDevice = Utils.backAVCaptureDevice()
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        if _captureDevice != nil {
+            initSession()
+        }
+        _captureSession.startRunning()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        _captureSession.removeInput(_caputreInput)
+        _captureSession.removeOutput(_captureOutput)
+        _captureSession.stopRunning()
+        cancel_delay(_hideSliderDispatchHandler)
+    }
+    
+    // ios8 won't get autolayout ready on viewDidLoad
+    override func viewDidLayoutSubviews() {
+        _previewLayer?.frame = _cameraView.bounds
+    }
+    
+    func initSession() {
+        _captureSession.sessionPreset = AVCaptureSessionPresetPhoto
+        
+        var err : NSError? = nil
+        _caputreInput = AVCaptureDeviceInput(device: _captureDevice, error: &amp;err)
+        _captureSession.addInput(_caputreInput)
+        
+        if err != nil {
+            println("error: \(err?.localizedDescription)")
+        }
+        
+        _captureOutput.outputSettings = [AVVideoCodecKey: AVVideoCodecJPEG]
+        _captureSession.addOutput(_captureOutput)
+        
+        _previewLayer = AVCaptureVideoPreviewLayer(session: _captureSession)
+        _previewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+        _cameraView.layer.addSublayer(_previewLayer)
+    }
+    
+    func takePicture() {
+        var videoConnection: AVCaptureConnection?
+        
+        for connection in _captureOutput.connections as Array&lt;AVCaptureConnection&gt; {
+            for port: AVCaptureInputPort in connection.inputPorts as Array&lt;AVCaptureInputPort&gt; {
+                if port.mediaType.isEqual(AVMediaTypeVideo) {
+                    videoConnection = connection
+                    break
+                }
+            }
+            
+            if videoConnection != nil {
+                break
+            }
+        }
+        
+        _captureOutput.captureStillImageAsynchronouslyFromConnection(videoConnection, completionHandler: { (imageSampleBuffer: CMSampleBuffer!, error: NSError!) -&gt; Void in
+            self._capturedImage = UIImage(data: AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageSampleBuffer))
+            self.preview()
+        })
+    }
+    
+}
+
+// zoom, focus, etc
+extension CameraViewController {
+    
+    func focusTo(point: CGPoint) {
+        var pointOfInterest: CGPoint = CGPointMake(point.y/self.view.bounds.size.height, 1.0-point.y/self.view.bounds.size.width)
+        
+        var error: NSError?
+        _captureDevice?.lockForConfiguration(&amp;error)
+        if error != nil {
+            print(error?.localizedDescription)
+            return
+        }
+        
+        if _captureDevice?.focusPointOfInterestSupported == true &amp;&amp; _captureDevice?.isFocusModeSupported(AVCaptureFocusMode.AutoFocus) == true {
+            _captureDevice?.focusPointOfInterest = pointOfInterest
+            _captureDevice?.focusMode = AVCaptureFocusMode.AutoFocus
+        }
+        
+        //TODO: exposure seems have some problem
+        if _captureDevice?.exposurePointOfInterestSupported == true &amp;&amp; _captureDevice?.isExposureModeSupported(AVCaptureExposureMode.ContinuousAutoExposure) == true {
+            _captureDevice?.exposurePointOfInterest = pointOfInterest
+            _captureDevice?.exposureMode = AVCaptureExposureMode.ContinuousAutoExposure
+        }
+        
+        _captureDevice?.unlockForConfiguration()
+    }
+    
+    func zoom(factor: CGFloat) {
+        var error: NSError?
+        _captureDevice?.lockForConfiguration(&amp;error)
+        if error != nil {
+            print(error?.localizedDescription)
+            return
+        }
+        
+        _zoomScale = factor
+        
+        if _zoomScale &lt; 1.0 {
+            _zoomScale = 1.0
+        } else if _zoomScale &gt; SKF_CAMERA_ZOOM_MAX {
+            _zoomScale = SKF_CAMERA_ZOOM_MAX
+        }
+        
+        _zoomSlider.value = Float(_zoomScale)
+        displaySlider()
+        
+        _captureDevice?.videoZoomFactor = _zoomScale
+        
+        _captureDevice?.unlockForConfiguration()
+    }
+}
+
+// buttons, etc
+extension CameraViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -&gt; Bool {
+        if gestureRecognizer.isKindOfClass(UIPinchGestureRecognizer) {
+            _beginGestureScale = _zoomScale;
+        }
+        
+        return true
+    }
+    
+    @IBAction func handleTapGesture(recognizer: UITapGestureRecognizer) {
+        focusTo(recognizer.locationInView(_cameraView))
+    }
+    
+    @IBAction func handlePinchGesture(recognizer: UIPinchGestureRecognizer) {
+        zoom(_beginGestureScale * recognizer.scale)
+        focusTo(recognizer.locationInView(_cameraView))
+    }
+    
+    @IBAction func zoomSliderValueChanged(sender: UISlider) {
+        zoom(CGFloat(sender.value))
+        focusTo(_cameraView.center)
+    }
+    
+    func displaySlider() {
+        cancel_delay(_hideSliderDispatchHandler)
+        
+        self._zoomSlider.alpha = 1
+
+        _hideSliderDispatchHandler = delay(3.0) {
+            UIView.animateWithDuration(1.0,
+                animations: {
+                    self._zoomSlider.alpha = 0
+                })
+        }
+    }
+    
+    @IBAction func shutterBtnPressed(sender: AnyObject) {
+        takePicture()
+        initPreviewView()
+    }
+    
+    @IBAction func doneBtnPressed(sender: AnyObject) {
+        _finishBlock()
+    }
+    
+    func retakeBtnPressed() {
+        _previewControllPanelView.removeFromSuperview()
+        _previewImageView.removeFromSuperview()
+    }
+    
+    func useBtnPressed() {
+        _thumbView.hidden = false
+        _previewControllPanelView.removeFromSuperview()
+        
+        UIView.animateWithDuration(0.5, animations: { () -&gt; Void in
+            self._previewImageView.bounds = self._thumbImageView.bounds
+        }) { (finished) -&gt; Void in
+            self._previewImageView.removeFromSuperview()
+            self._thumbImageView.image = self._previewImageView.image
+            self._thumbCount++
+            self._thumbCountLabel.text = String(self._thumbCount)
+        }
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            var photoData = UIImageJPEGRepresentation(self._capturedImage, 1.0)
+            SessionManager.sharedInstance.addPhotoToCurrentSession(photoData)
+//            var imageName: String = Utils.imagePath() + "1.jpg"
+//            photoData.writeToFile(imageName, atomically: true)
+        })
+    }
+}
+
+// still image preview
+extension CameraViewController {
+    func preview() {
+        self._previewImageView.image = self._capturedImage
+    }
+    
+    func initPreviewView() {
+        _previewImageView = UIImageView(frame: _cameraView.frame)
+        _previewImageView.contentMode = UIViewContentMode.ScaleAspectFill
+        _previewControllPanelView = UIView(frame: _cameraControllPanelView.frame)
+        _previewControllPanelView.backgroundColor = UIColor.blackColor()
+        self.view.addSubview(_previewImageView)
+        self.view.addSubview(_previewControllPanelView)
+        
+        UIView.animateWithDuration(1, animations: { () -&gt; Void in
+            self._previewImageView.backgroundColor = UIColor.blackColor()
+        })
+        
+        var width: Int = Int(_previewControllPanelView.frame.width)
+        var height: Int = Int(_previewControllPanelView.frame.height)
+        
+        var retakeBtn: UIButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
+        retakeBtn.frame = CGRect(x: (width/2 - 100)/2, y: 0, width: 100, height: height)
+        retakeBtn.titleLabel?.textAlignment = .Center
+        retakeBtn.setTitle("Retake", forState: UIControlState.Normal)
+        retakeBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        retakeBtn.titleLabel?.font = UIFont(name: "SKFChevin-Thin", size: 23)
+        retakeBtn.addTarget(self, action: "retakeBtnPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        _previewControllPanelView.addSubview(retakeBtn)
+        
+        var useBtn: UIButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
+        useBtn.frame = CGRect(x: (width*3/2 - 100)/2, y: 0, width: 100, height: Int(_previewControllPanelView.frame.height))
+        useBtn.titleLabel?.textAlignment = .Center
+        useBtn.setTitle("Use", forState: UIControlState.Normal)
+        useBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        useBtn.titleLabel?.font = UIFont(name: "SKFChevin-Thin", size: 23)
+        useBtn.addTarget(self, action: "useBtnPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        _previewControllPanelView.addSubview(useBtn)
+    }
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>CC1BB980-FD91-4F8A-B30D-AF9F0A9A3677</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>CameraViewControoler</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>

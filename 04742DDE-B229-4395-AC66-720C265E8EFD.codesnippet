@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>CodeBlock</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>    class func alert(msg: NSString, onViewController viewController: UIViewController) {
+        if Utils.canUseAlertController() {
+            let warnAlert = UIAlertController(title: SKF_INFO_ERROR.TITLE, message: msg, preferredStyle: UIAlertControllerStyle.Alert)
+            let okAction = UIAlertAction(title: SKF_ERROR_BUTTON_OK, style: UIAlertActionStyle.Cancel, handler: nil)
+            warnAlert.addAction(okAction)
+            viewController.presentViewController(warnAlert, animated: true, completion: nil)
+        } else {
+            let warnAlert = UIAlertView(title: SKF_INFO_ERROR.TITLE, message: msg, delegate: nil, cancelButtonTitle: SKF_ERROR_BUTTON_OK)
+            warnAlert.show()
+        }
+    }</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>04742DDE-B229-4395-AC66-720C265E8EFD</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>alert</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>

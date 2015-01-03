@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>CodeBlock</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>    func sendEmail(#replyTo: String, subject: String, content: String, attachments: NSOrderedSet) {
+        let mailMessage = SKPSMTPMessage()
+        mailMessage.fromEmail = &lt;#from#&gt;
+        mailMessage.toEmail = &lt;#to#&gt;
+        mailMessage.replyTo = replyTo
+        mailMessage.relayHost = &lt;#SMTP.HOST#&gt;
+        mailMessage.relayPorts = [&lt;#SMTP.PORT]#&gt;
+        mailMessage.requiresAuth = &lt;#SMTP.AUTH_REQUIRED#&gt;
+        mailMessage.login = &lt;#SMTP.USERNAME#&gt;
+        mailMessage.pass = &lt;#SMTP.PASSWORD#&gt;
+        mailMessage.connectTimeout = &lt;#SMTP.TIMEOUT#&gt;
+        
+        mailMessage.subject = subject
+        mailMessage.wantsSecure = &lt;#SMTP.TLS#&gt;
+        // Only do this for self-signed certs!
+        // mailMessage.validateSSLChain = false
+        mailMessage.delegate = delegate
+        
+        let partsArray = NSMutableArray()
+        
+        let plainPart = NSMutableDictionary()
+        plainPart[kSKPSMTPPartContentTypeKey] = "text/plain"
+        plainPart[kSKPSMTPPartMessageKey] = content
+        plainPart[kSKPSMTPPartContentTransferEncodingKey] = "8bit"
+        partsArray.addObject(plainPart)
+        
+        attachments.enumerateObjectsUsingBlock{ (attachment, idx, stop) -&gt; Void in
+            let attachmentsPart = NSMutableDictionary()
+            attachmentsPart[kSKPSMTPPartContentTransferEncodingKey] = "base64"
+            attachmentsPart[kSKPSMTPPartContentTypeKey] = "text/directory;\r\n\tx-unix-mode=0644;\r\n\tname=\"\(idx).jpg\""
+            attachmentsPart[kSKPSMTPPartContentDispositionKey] = "attachment;\r\n\tfilename=\"\(idx).jpg\""
+            attachmentsPart[kSKPSMTPPartMessageKey] = attachment.data.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
+            partsArray.addObject(attachmentsPart)
+        }
+        
+        mailMessage.parts = partsArray
+        mailMessage.send()
+    }</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>9CFFD7AF-70FD-4D7C-AFBA-1601D7AC2E26</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>Send Email with SKPS SMTP Lib</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>

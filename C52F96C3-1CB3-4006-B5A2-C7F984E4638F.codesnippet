@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>CodeBlock</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>        let _db = FMDatabase(path: &lt;#dbPath#&gt;)
+        
+        if !_db.open() {
+            println("Unable to open database")
+            return
+        }
+        
+        if !_db.executeUpdate(&lt;#sql#&gt;, withArgumentsInArray: &lt;#args#&gt;) {
+            println("insert group failed: \(_db.lastErrorMessage())")
+        }
+        
+        _db.close()</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>C52F96C3-1CB3-4006-B5A2-C7F984E4638F</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>FMDB-Insert-Update-Delete</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>

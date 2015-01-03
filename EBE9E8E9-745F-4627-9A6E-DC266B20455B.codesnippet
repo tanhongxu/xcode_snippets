@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>ClassImplementation</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>    func asyncAPICall(uri: String, params: [String: String], callback: (jsonDic: [String: AnyObject?]?) -&gt; Void) {
+        
+        var postData: String = ""
+        for (key, value) in params {
+            if value != "nil" {
+                postData.extend(key + "=" + value + "&amp;")
+            }
+        }
+        
+        println("-----APICall------")
+        println("uri: \(uri)")
+        println(postData)
+        println("------------------")
+        
+        var url: NSURL! = NSURL(string: uri, relativeToURL: API_BASE)
+        var request: NSMutableURLRequest = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        request.HTTPBody = postData.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        var task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+                (data, response, error) -&gt; Void in
+                if (error != nil) {
+                    println("[server error]" + error.localizedDescription)
+                } else {
+                    
+                    var jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
+                    println("------APIReturn------")
+                    println(jsonStr!)
+                    println("---------------------")
+                    
+                    var error: NSError?
+                    var json = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &amp;error) as Dictionary&lt;String, AnyObject&gt;?
+                    if error != nil {
+                        println("[json parse error]" + error!.localizedDescription)
+                    }
+                    callback(jsonDic: json)
+                }
+        }
+        
+        task.resume()
+    }</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>EBE9E8E9-745F-4627-9A6E-DC266B20455B</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>asyncAPICall-POST-JOSN</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>

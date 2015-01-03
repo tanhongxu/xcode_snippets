@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>CodeBlock</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>    class func backAVCaptureDevice() -&gt; AVCaptureDevice? {
+        struct Static {
+            static var device: AVCaptureDevice?
+        }
+        
+        if Static.device == nil {
+            for device in AVCaptureDevice.devices() {
+                // Make sure this particular device supports video
+                if device.hasMediaType(AVMediaTypeVideo) &amp;&amp; device.position == AVCaptureDevicePosition.Back {
+                    Static.device = device as? AVCaptureDevice
+                    
+                    Static.device!.lockForConfiguration(nil)
+                    if Static.device!.isFocusModeSupported(.AutoFocus) {
+                        Static.device!.focusMode = AVCaptureFocusMode.AutoFocus
+                    }
+                    Static.device!.unlockForConfiguration()
+                    
+                }
+            }
+        }
+        
+        return Static.device
+    }</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>D7F46257-BCA4-48A8-BB39-3EE4D56E19ED</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>@see CameraViewContoller </string>
+	<key>IDECodeSnippetTitle</key>
+	<string>backAVCaptureDevice</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>

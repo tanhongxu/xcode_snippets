@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>CodeBlock</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>    class func colorHex2UIColor(hex: UInt32) -&gt; UIColor {
+        var r = CGFloat(hex &gt;&gt; 24 &amp; 0xFF) / 0xFF
+        var g = CGFloat(hex &gt;&gt; 16 &amp; 0xFF) / 0xFF
+        var b = CGFloat(hex &gt;&gt; 8  &amp; 0xFF) / 0xFF
+        var a = CGFloat(hex       &amp; 0xFF) / 0xFF
+        
+        return UIColor(red: r, green: g, blue: b, alpha: a)
+    }</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>3489A405-CEFB-45E5-9D9D-1062B5E29C70</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>colorHex2UIColor</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>
