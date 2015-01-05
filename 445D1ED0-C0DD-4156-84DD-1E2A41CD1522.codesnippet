@@ -4,10 +4,11 @@
 <dict>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
-		<string>CodeExpression</string>
+		<string>CodeBlock</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>        // Remove seperator inset
+	<string>    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        // Remove seperator inset
         if cell.respondsToSelector("setSeparatorInset:") {
             cell.separatorInset = UIEdgeInsetsZero
         }
@@ -19,7 +20,8 @@
         // Explictly set your cell's layout margins
         if cell.respondsToSelector("setLayoutMargins:") {
             cell.layoutMargins = UIEdgeInsetsZero
-        }</string>
+        }
+    }</string>
 	<key>IDECodeSnippetIdentifier</key>
 	<string>445D1ED0-C0DD-4156-84DD-1E2A41CD1522</string>
 	<key>IDECodeSnippetLanguage</key>
@@ -29,6 +31,6 @@
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>
-	<integer>0</integer>
+	<integer>2</integer>
 </dict>
 </plist>
