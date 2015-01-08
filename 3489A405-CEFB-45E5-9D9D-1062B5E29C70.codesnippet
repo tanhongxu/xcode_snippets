@@ -19,8 +19,10 @@
 	<string>3489A405-CEFB-45E5-9D9D-1062B5E29C70</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>Utils to convert color hex to UIColor</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>colorHex2UIColor</string>
+	<string>Swift colorHex2UIColor</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

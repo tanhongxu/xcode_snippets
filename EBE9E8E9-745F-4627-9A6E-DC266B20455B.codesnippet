@@ -52,8 +52,10 @@
 	<string>EBE9E8E9-745F-4627-9A6E-DC266B20455B</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>async API Call with POST and JOSN</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>asyncAPICall-POST-JOSN</string>
+	<string>Swift AsyncAPICall</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

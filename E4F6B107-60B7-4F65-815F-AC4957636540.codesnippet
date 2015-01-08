@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>ClassImplementation</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>extension NSDateFormatter {
+    func stringYearMonthDayFromDate(date: NSDate) -&gt; String {
+        self.dateFormat = "yyyy-MM-dd"
+        return self.stringFromDate(date)
+    }
+    
+    func stringMonthDayFromDate(date: NSDate) -&gt; String {
+        self.dateFormat = "MM-dd"
+        return self.stringFromDate(date)
+    }
+    
+    func stringHourMinFromDate(date: NSDate) -&gt; String {
+        self.dateFormat = "hh:mm"
+        return self.stringFromDate(date)
+    }
+    
+    func stringAccordingNowFromDate(date: NSDate) -&gt; String {
+        switch date.timeIntervalSinceNow {
+        case let t where t &lt; -365*24*3600*1000:
+            return stringYearMonthDayFromDate(date)
+        case let t where t &lt; -24*3600*1000:
+            return stringMonthDayFromDate(date)
+        default:
+            return stringHourMinFromDate(date)
+        }
+    }
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>E4F6B107-60B7-4F65-815F-AC4957636540</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>added yyyy-MM-dd, MM-dd, hh:mm and a relative one</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>Swift ext NSDateFormatter</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>

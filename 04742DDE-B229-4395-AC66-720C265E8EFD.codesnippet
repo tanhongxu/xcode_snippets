@@ -22,8 +22,10 @@
 	<string>04742DDE-B229-4395-AC66-720C265E8EFD</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>alert for ios7- &amp; 8+</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>alert</string>
+	<string>Swift Alert</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

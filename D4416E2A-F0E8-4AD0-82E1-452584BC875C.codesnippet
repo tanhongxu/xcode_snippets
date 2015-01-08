@@ -23,8 +23,10 @@
 	<string>D4416E2A-F0E8-4AD0-82E1-452584BC875C</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>Utils to valide email address</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>isValidateEmail</string>
+	<string>Swift isValidateEmail</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

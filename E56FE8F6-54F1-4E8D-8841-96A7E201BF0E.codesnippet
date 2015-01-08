@@ -7,26 +7,22 @@
 		<string>CodeBlock</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>        let _db = FMDatabase(path: &lt;#dbPath#&gt;)
-        
-        if !_db.open() {
-            println("Unable to open database")
-            return nil
-        }
-        
-        if let rs = _db.executeQuery(&lt;#sql#&gt;) {
-            while rs.next() {
-                &lt;#rs.intForColumn("id")#&gt;
-            }
-        }
-        
-        _db.close()</string>
+	<string>            switch &lt;#x#&gt; {
+            case let t where t &gt; &lt;#10#&gt;:
+                &lt;#handler#&gt;
+                break
+            case 1:
+                &lt;#handler#&gt;
+                break
+            default:
+                &lt;#handler#&gt;
+            }</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>85AFE737-4586-474A-87FD-5E3F3C8A89C4</string>
+	<string>E56FE8F6-54F1-4E8D-8841-96A7E201BF0E</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>Swift FMDB Fetch</string>
+	<string>Swift Switch Expression</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

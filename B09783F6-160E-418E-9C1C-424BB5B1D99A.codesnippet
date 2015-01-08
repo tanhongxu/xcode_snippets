@@ -8,14 +8,16 @@
 	</array>
 	<key>IDECodeSnippetContents</key>
 	<string>      UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: UIFont(name: &lt;#fontName#&gt;, size: &lt;#fontSize#&gt;)!, NSForegroundColorAttributeName: &lt;#UIColor#&gt;]
-    
+      
       UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName : UIFont(name: &lt;#fontName#&gt;, size: &lt;#fontSize#&gt;)!, NSForegroundColorAttributeName: &lt;#UIColor#&gt;], forState: UIControlState.Normal)</string>
 	<key>IDECodeSnippetIdentifier</key>
 	<string>B09783F6-160E-418E-9C1C-424BB5B1D99A</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>code to change default font in navigation bar</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>Navigationbar Font</string>
+	<string>Swift Navigationbar Font</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

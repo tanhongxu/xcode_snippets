@@ -64,8 +64,10 @@ func cancel_delay(closure:dispatch_cancelable_closure?) {
 	<string>F36BF419-BA71-451B-B670-10900F929513</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>functions to extend dispath to be cancelable</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>dispatch</string>
+	<string>Swift Dispatch</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

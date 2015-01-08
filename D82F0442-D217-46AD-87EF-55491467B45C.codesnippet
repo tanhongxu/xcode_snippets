@@ -17,8 +17,10 @@
 	<string>D82F0442-D217-46AD-87EF-55491467B45C</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>Utils to check if UIAlertController available</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>canUseAlertController</string>
+	<string>Swift canUseAlertController</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

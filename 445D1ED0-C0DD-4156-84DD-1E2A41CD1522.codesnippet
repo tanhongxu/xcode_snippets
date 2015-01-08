@@ -26,8 +26,10 @@
 	<string>445D1ED0-C0DD-4156-84DD-1E2A41CD1522</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>override default cell inset for UITableView</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>Cell Inset</string>
+	<string>Swift Cell Inset</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

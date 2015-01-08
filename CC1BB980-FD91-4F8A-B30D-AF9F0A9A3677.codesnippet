@@ -292,8 +292,10 @@ extension CameraViewController {
 	<string>CC1BB980-FD91-4F8A-B30D-AF9F0A9A3677</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>by AVFoundation</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>CameraViewControoler</string>
+	<string>Swift CameraViewController</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

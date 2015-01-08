@@ -49,8 +49,10 @@
 	<string>9CFFD7AF-70FD-4D7C-AFBA-1601D7AC2E26</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>@see SKPS SMTP Lib</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>Send Email with SKPS SMTP Lib</string>
+	<string>Swift Send Email with SKPS SMTP Lib</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

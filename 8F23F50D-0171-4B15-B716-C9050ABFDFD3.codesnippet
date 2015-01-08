@@ -4,29 +4,19 @@
 <dict>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
-		<string>CodeBlock</string>
+		<string>TopLevel</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>        let _db = FMDatabase(path: &lt;#dbPath#&gt;)
-        
-        if !_db.open() {
-            println("Unable to open database")
-            return nil
-        }
-        
-        if let rs = _db.executeQuery(&lt;#sql#&gt;) {
-            while rs.next() {
-                &lt;#rs.intForColumn("id")#&gt;
-            }
-        }
-        
-        _db.close()</string>
+	<string>enum &lt;#enum_name#&gt;: &lt;#enum_type#&gt; {
+    case &lt;#case1#&gt; = 0
+    case &lt;#case2#&gt;
+}</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>85AFE737-4586-474A-87FD-5E3F3C8A89C4</string>
+	<string>8F23F50D-0171-4B15-B716-C9050ABFDFD3</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>Swift FMDB Fetch</string>
+	<string>Swift Enum Define</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

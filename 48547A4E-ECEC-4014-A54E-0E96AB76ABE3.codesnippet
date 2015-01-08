@@ -14,8 +14,10 @@
 	<string>48547A4E-ECEC-4014-A54E-0E96AB76ABE3</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>Utils to get document folder path</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>Document Folder</string>
+	<string>Swift Document Folder</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>
